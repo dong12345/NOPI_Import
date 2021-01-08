@@ -7,7 +7,7 @@ namespace NOPI_Import
 {
     public partial class Form1 : Form
     {
-        private string _sqlConnectionSreing = string.Empty;
+        private string _sqlConnectionString = string.Empty;
         private string _tableName = string.Empty;
         private string _filePath = string.Empty;
         public  Form1()
@@ -24,7 +24,7 @@ namespace NOPI_Import
 
         private bool Valid()
         {
-            if (string.IsNullOrEmpty(_sqlConnectionSreing))
+            if (string.IsNullOrEmpty(_sqlConnectionString))
             {
                 MessageBox.Show("请填写数据库连接字符串", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -55,7 +55,7 @@ namespace NOPI_Import
         private async void bt_Insert_Click(object sender, EventArgs e)
         {
             this.txt_log.Text = string.Empty;
-            _sqlConnectionSreing = txtSqlConnection.Text.Trim();
+            _sqlConnectionString = txtSqlConnection.Text.Trim();
             _tableName = txt_tableName.Text.Trim();
             if (Valid())
             {
@@ -82,7 +82,7 @@ namespace NOPI_Import
         private Task<string> InsertDB()
         {
             return Task.Run(()=> {
-                ImportHelper helper = new ImportHelper(_filePath, _tableName, _sqlConnectionSreing);
+                ImportHelper helper = new ImportHelper(_filePath, _tableName, _sqlConnectionString);
                 var data = helper.Import();
                 return data.Message;
             });
